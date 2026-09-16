@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cookieParser from "cookie-parser";
-import cors from "cors";
+//import cors from "cors";
 
 import authRoutes from "../routes/authRoutes.js";
 import urlRoutes from "../routes/urlRoutes.js";
@@ -13,10 +13,10 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-  origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
-  credentials: true,
-}));
+//app.use(cors({
+//  origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
+//  credentials: true,
+//}));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/url", urlRoutes);
@@ -34,11 +34,19 @@ app.get("/api/test", publicLimiter, (_, res) => {
   });
 });
 
+app.post("/api/debug", (req, res) => {
+  console.log("DEBUG BODY:", req.body);
+
+  res.json({
+    body: req.body
+  });
+});
+
 connectDB();
 
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on PORT ${PORT}`);
 });
 

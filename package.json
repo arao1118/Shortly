@@ -9,7 +9,6 @@
   "main": "./server/server.js",
   "scripts": {
     "dev": "nodemon server/server.js",
-    "build": "vite build",
     "start": "node server/server.js"
   },
   "dependencies": {
@@ -21,19 +20,13 @@
     "express": "^5.2.1",
     "express-validator": "^7.3.2",
     "jsonwebtoken": "^9.0.3",
-    "lucide-react": "latest",
     "mongoose": "^9.10.0",
     "nanoid": "^6.0.1",
     "nodemailer": "^10.0.9",
-    "react": "latest",
-    "react-dom": "latest",
-    "react-router-dom": "latest",
     "redis": "^6.2.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "latest",
     "concurrently": "^9.2.1",
-    "nodemon": "^3.1.14",
-    "vite": "latest"
+    "nodemon": "^3.1.14"
   }
 }

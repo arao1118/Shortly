@@ -94,7 +94,6 @@ const register = async (req, res) => {
       success: true,
       message: "User registered successfully.",
       userInfo: {
-        _id: newUser._id,
         name: newUser.name,
         email: newUser.email
       }
@@ -111,8 +110,10 @@ const register = async (req, res) => {
 };
 
 const generateOTP = async (req, res) => {
+
+  let { email } = req.body;
+
   try {
-    let { email } = req.body;
 
     if (!email || typeof email !== "string") {
       return res.status(400).json({
@@ -171,7 +172,7 @@ const generateOTP = async (req, res) => {
       });
     } else {
       await transporter.sendMail({
-        from: process.env.EMAIL_USER,
+        from: process.env.EMAIL_FROM,
         to: email,
         subject: "Email Verification OTP",
         text: `The OTP to verify your account is ${OTP}. It expires in 5 minutes.`
