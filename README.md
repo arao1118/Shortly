@@ -1,149 +1,104 @@
-# Shortly — Full-Stack URL Shortener
+# URL Shortener API
 
-A single-package full-stack URL shortener built from the original **urlshortner backend** and the **Shortly React frontend**.
+A backend-only URL shortener built with Node.js, Express.js, MongoDB and Redis.
 
-## Architecture
+The project provides user authentication, URL management, expiration, email verification, password reset and Redis-based rate limiting.
 
-The project intentionally uses **one root `package.json`, one `package-lock.json`, and one `node_modules/`**. There are no separate frontend/backend npm projects.
+## Features
 
-```text
-shortly/
-├── src/                       # React + Vite frontend
-│   ├── components/
-│   ├── lib/
-│   ├── pages/
-│   ├── main.jsx
-│   └── styles.css
-├── configs/                   # MongoDB, Redis, Nodemailer
-├── controllers/               # Express controllers
-├── middlewares/               # JWT + rate limiting middleware
-├── models/                    # Mongoose models
-├── routes/                    # Express routes
-├── server/
-│   └── server.js              # Express entry point
-├── docs/
-│   └── API.md                 # Complete API reference
-├── index.html                 # Vite entry HTML
-├── vite.config.js
-├── .env.example
-├── .gitignore
-├── package.json
-├── package-lock.json
-└── README.md
-```
+- JWT authentication using HttpOnly cookies
+- User registration, login and logout
+- Email verification with OTP
+- Password reset with OTP
+- Create, view and delete shortened URLs
+- Unique short URL generation
+- URL expiration
+- User-based URL ownership
+- Redis token-bucket rate limiting
+- Public short URL redirection
+- REST API
 
-### Why this structure?
+## Tech Stack
 
-- `src/` is the frontend source, not a nested `public/` application.
-- `server/` is only the Node/Express entry point; backend modules stay at the project root.
-- MongoDB, Redis, email, authentication, URL management and React all belong to the same application.
-- `npm install` from the root creates the only `node_modules/`.
-- In development, Vite runs on `5173` and proxies `/api` to Express on `4000`.
-- In production, Express serves the Vite `dist/` build, so the UI and API use the same origin.
-
-## Tech stack
-
-- React
-- Vite
-- React Router
-- Lucide React
 - Node.js
-- Express 5
-- MongoDB + Mongoose
+- Express.js
+- MongoDB
+- Mongoose
 - Redis
-- JWT in an HTTP-only cookie
-- bcryptjs
+- JWT
+- bcrypt
 - Nodemailer
 - nanoid
-- CORS
+- Postman
+
+## Project Structure
+
+```text
+src/
+├── configs/
+├── controllers/
+├── middlewares/
+├── models/
+├── routes/
+└── server/
+```
 
 ## Setup
 
-### 1. Create environment variables
+Clone the repository:
 
 ```bash
-cp .env.example .env
-```
-
-Fill in your MongoDB, JWT, SMTP and Redis values.
-
-### 2. Install everything once
-
-From the project root:
-
-```bash
+git clone <repository-url>
+cd urlshortner
 npm install
 ```
 
-This creates **one** `node_modules/` directory.
+Create a `.env` file:
 
-### 3. Development
+```env
+PORT=4000
+MONGODB_URI=<mongodb-uri>
+REDIS_URI=<redis-uri>
+JWT_SECRET=<jwt-secret>
+CLIENT_ORIGIN=<client-origin>
+
+EMAIL_HOST=<smtp-host>
+EMAIL_USER=<smtp-user>
+EMAIL_PASS=<smtp-password>
+```
+
+Run the development server:
 
 ```bash
 npm run dev
 ```
 
-This starts:
+The API will be available at:
 
-- React/Vite: `http://localhost:5173`
-- Express API: `http://localhost:4000`
-
-Open `http://localhost:5173` in the browser.
-
-### 4. Run only one side
-
-```bash
-npm run dev:client
-npm run dev:server
+```text
+http://localhost:4000
 ```
 
-### 5. Production
+## Main API Routes
 
-```bash
-npm run build
-npm start
-```
+| Method | Route | Description |
+|---|---|---|
+| POST | `/api/auth/register` | Register user |
+| POST | `/api/auth/login` | Login |
+| POST | `/api/auth/logout` | Logout |
+| POST | `/api/auth/verify` | Request verification OTP |
+| PUT | `/api/auth/verify` | Verify email |
+| POST | `/api/auth/forgot-password` | Request password reset OTP |
+| PATCH | `/api/auth/reset-password` | Reset password |
+| POST | `/api/url` | Create short URL |
+| GET | `/api/user/urls` | Get user's URLs |
+| GET | `/api/url/:slug` | Redirect to original URL |
+| DELETE | `/api/url/:slug` | Delete short URL |
 
-Express serves the generated `dist/` directory and the API from the same server.
+## Future Improvements
 
-## Authentication
-
-The backend issues a JWT in an HTTP-only cookie named `token`. The React API helper uses `credentials: 'include'` for every request, so protected endpoints automatically receive the cookie.
-
-The frontend also stores the non-sensitive `userInfo` returned by authentication in `localStorage` for UI state. The JWT itself is **not** stored in localStorage.
-
-## API
-
-The complete endpoint reference, including request bodies, query/path parameters, authentication requirements, success responses, errors and current implementation quirks is in [`docs/API.md`](docs/API.md).
-
-### Endpoint overview
-
-| Method | Endpoint | Auth | Purpose |
-|---|---|---|---|
-| POST | `/api/auth/register` | No | Register a user and issue JWT cookie |
-| POST | `/api/auth/login` | No | Log in a verified user |
-| POST | `/api/auth/logout` | Yes | Clear JWT cookie |
-| POST | `/api/auth/verify` | No | Send email-verification OTP |
-| PUT | `/api/auth/verify` | No | Verify email OTP |
-| POST | `/api/auth/forgot-password` | No | Send password-reset OTP |
-| PATCH | `/api/auth/reset-password` | No | Reset password with OTP |
-| DELETE | `/api/auth/delete-user` | Yes | Delete authenticated account |
-| POST | `/api/url` | Yes | Create short URL |
-| GET | `/api/url?originalURL=...` | Yes | Look up an owned URL by original URL |
-| GET | `/api/url/:slug` | No | Public redirect to original URL |
-| DELETE | `/api/url/:slug` | Yes | Delete an owned short URL |
-| GET | `/api/user/urls` | Yes | List authenticated user's URLs |
-| GET | `/api/test` | No | Rate-limit test endpoint |
-
-## Important implementation details preserved from the original backend
-
-- Short codes are 7-character `nanoid` values.
-- URL ownership is enforced through the authenticated user's `_id`.
-- Link expiration is calculated from `expirationDuration` in milliseconds.
-- Public redirects are rate-limited by IP using Redis.
-- Protected operations are rate-limited by user ID using Redis.
-- Verification and password-reset OTPs expire after 5 minutes.
-- JWTs expire after 30 minutes.
-- Passwords are hashed with bcryptjs.
-
-This merge keeps the backend behavior rather than silently replacing it with the separate backend that was bundled inside `shortly.zip`.
+- Search, filtering and pagination
+- URL analytics
+- Automated API tests
+- Swagger/OpenAPI documentation
+- Docker deployment
