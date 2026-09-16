@@ -22,18 +22,25 @@ app.use((req, _, next) => {
   next();
 });
 
-app.get("/api/test", publicLimiter, (_, res) => {
+//app.get("/api/test", publicLimiter, (_, res) => {
+//  res.json({
+//    success: true,
+//    message: "Request accepted",
+//  });
+//});
+//
+//app.post("/api/debug", (req, res) => {
+//  console.log("DEBUG BODY:", req.body);
+//
+//  res.json({
+//    body: req.body
+//  });
+//});
+//
+app.get("/", (_, res) => {
   res.json({
     success: true,
-    message: "Request accepted",
-  });
-});
-
-app.post("/api/debug", (req, res) => {
-  console.log("DEBUG BODY:", req.body);
-
-  res.json({
-    body: req.body
+    message: "Shortly API is running"
   });
 });
 
