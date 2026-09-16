@@ -1,4 +1,5 @@
 import userModel from "../models/userModel.js";
+import urlModel from "../models/urlModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import transporter from "../configs/nodemailer.js";
@@ -529,8 +530,8 @@ const resetPassword = async (req, res) => {
 const deleteUser = async (req, res) => {
   let { email, password } = req.body;
   email = email.trim().toLowerCase();
-  if (!email) res.status(400).send({ success: false, message: " Email id required" });
-  if (!password) res.status(400).send({ success: false, message: " pasword required" });
+  if (!email) return res.status(400).send({ success: false, message: " Email id required" });
+  if (!password) return res.status(400).send({ success: false, message: " password required" });
 
   try {
     const userId = req.user._id;
@@ -543,10 +544,11 @@ const deleteUser = async (req, res) => {
     if (!isMatch) res.status(400).send({ success: false, message: "Wrong Password." });
 
     await userModel.findByIdAndDelete(userId);
+    await urlModel.deleteMany({ user: userId });
 
     res.clearCookie('token');
 
-    return res.status(200).send({ success: false, message: "User successfully deleted." });
+    return res.status(200).send({ success: true, message: "User successfully deleted." });
   } catch (err) {
     return res.status(500).send({ success: false, message: err.message });
   }
