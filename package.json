@@ -8,13 +8,9 @@
   "type": "module",
   "main": "./server/server.js",
   "scripts": {
-    "dev": "concurrently -n API,WEB -c blue,magenta \"nodemon server/server.js\" \"vite\"",
-    "dev:server": "nodemon server/server.js",
-    "dev:client": "vite",
+    "dev": "nodemon server/server.js",
     "build": "vite build",
-    "preview": "vite preview",
-    "start": "node server/server.js",
-    "test": "echo \"No tests specified\" && exit 0"
+    "start": "node server/server.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

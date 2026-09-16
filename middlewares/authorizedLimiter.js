@@ -5,8 +5,8 @@ export const authLimiter = async (req, res, next) => {
   const userID = req.user._id.toString();
   const key = `rate_limit:user:${userID}`;
 
-  const MAX_REQUEST = 5;
-  const REFILL_RATE_PER_MS = 0;
+  const MAX_REQUEST = 10;
+  const REFILL_RATE_PER_MS = 0.01;
   try {
 
     const exist = await client.hExists(key, 'token_size');

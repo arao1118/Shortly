@@ -34,17 +34,6 @@ app.get("/api/test", publicLimiter, (_, res) => {
   });
 });
 
-//app.use(express.static(distDir));
-//
-//app.use((req, res, next) => {
-//  if (req.method === "GET" && !req.path.startsWith("/api/")) {
-//    return res.sendFile(path.join(distDir, "index.html"), (err) => {
-//      if (err) next(err);
-//    });
-//  }
-//  next();
-//});
-
 connectDB();
 
 const PORT = process.env.PORT || 4000;
