@@ -7,6 +7,7 @@ import urlRoutes from "../routes/urlRoutes.js";
 import userRoutes from "../routes/userRoutes.js";
 import connectDB from "../configs/db.js";
 import publicLimiter from "../middlewares/publicLimiter.js";
+import authLimiter from "../middlewares/authorizedLimiter.js";
 
 const app = express();
 
