@@ -60,8 +60,7 @@ PORT=4000
 MONGODB_URI=<mongodb-uri>
 REDIS_URI=<redis-uri>
 JWT_SECRET=<jwt-secret>
-CLIENT_ORIGIN=<client-origin>
-
+EMIAL_FROM=<your-verified-email>
 EMAIL_HOST=<smtp-host>
 EMAIL_USER=<smtp-user>
 EMAIL_PASS=<smtp-password>
