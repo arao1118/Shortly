@@ -7,7 +7,7 @@ import urlRoutes from "../routes/urlRoutes.js";
 import userRoutes from "../routes/userRoutes.js";
 import connectDB from "../configs/db.js";
 import publicLimiter from "../middlewares/publicLimiter.js";
-import authLimiter from "../middlewares/authorizedLimiter.js";
+//import authLimiter from "../middlewares/authorizedLimiter.js";
 
 const app = express();
 
@@ -31,7 +31,7 @@ app.get("/api/test", publicLimiter, (_, res) => {
     message: "Request accepted",
   });
 });
-//
+
 //app.post("/api/debug", (req, res) => {
 //  console.log("DEBUG BODY:", req.body);
 //
@@ -39,7 +39,7 @@ app.get("/api/test", publicLimiter, (_, res) => {
 //    body: req.body
 //  });
 //});
-//
+
 app.get("/", (_, res) => {
   res.json({
     success: true,
