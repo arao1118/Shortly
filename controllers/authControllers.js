@@ -391,7 +391,7 @@ const login = async (req, res) => {
   }
 };
 
-const logout = async (req, res) => {
+const logout = async (_, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
