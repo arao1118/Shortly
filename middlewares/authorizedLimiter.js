@@ -4,7 +4,7 @@ export const publicLimiter = async (req, res, next) => {
 
   const userId = req.user._id;
 
-  const key = `publicRate_limit:user:${userId}`;
+  const key = `authRate_limit:user:${userId}`;
 
   const MAX_REQUEST = 10;
   const REFILL_RATE_PER_MS = 0.0001;
