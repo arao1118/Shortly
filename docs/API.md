@@ -2,18 +2,6 @@
 
 This document describes the **actual routes and response shapes implemented by the retained `urlshortner` backend**. It is intentionally based on the controllers and route definitions rather than on what the frontend happens to call.
 
-## Base URL
-
-Development API:
-
-```text
-http://localhost:4000/api
-```
-
-When using the Vite development server, the frontend calls `/api/...` and Vite proxies those requests to the API server.
-
-In production, Express serves the React build and the API from the same origin.
-
 ## Authentication
 
 Protected routes require the JWT stored in the HTTP-only `token` cookie.
