@@ -43,7 +43,7 @@ app.get("/api/test", publicLimiter, (_, res) => {
 app.get("/", (_, res) => {
   res.json({
     success: true,
-    message: "Shortly API is running"
+    message: "Welcome to Shortly. Manage all your short links in one place."
   });
 });
 
