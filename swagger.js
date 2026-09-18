@@ -59,12 +59,12 @@ const swaggerDocument = {
           },
           name: {
             type: "string",
-            example: "John Doe"
+            example: "Abhay rao"
           },
           email: {
             type: "string",
             format: "email",
-            example: "john@example.com"
+            example: "abhay@example.com"
           }
         }
       },
@@ -75,12 +75,12 @@ const swaggerDocument = {
         properties: {
           name: {
             type: "string",
-            example: "John Doe"
+            example: "Abhay rao"
           },
           email: {
             type: "string",
             format: "email",
-            example: "john@example.com"
+            example: "abhay@example.com"
           },
           password: {
             type: "string",
@@ -98,7 +98,7 @@ const swaggerDocument = {
           email: {
             type: "string",
             format: "email",
-            example: "john@example.com"
+            example: "abhay@example.com"
           },
           password: {
             type: "string",
@@ -115,7 +115,7 @@ const swaggerDocument = {
           email: {
             type: "string",
             format: "email",
-            example: "john@example.com"
+            example: "abhay@example.com"
           }
         }
       },
@@ -127,7 +127,7 @@ const swaggerDocument = {
           email: {
             type: "string",
             format: "email",
-            example: "john@example.com"
+            example: "abhay@example.com"
           },
           otp: {
             type: "integer",
@@ -143,7 +143,7 @@ const swaggerDocument = {
           email: {
             type: "string",
             format: "email",
-            example: "john@example.com"
+            example: "abhay@example.com"
           },
           otp: {
             type: "integer",
@@ -163,7 +163,7 @@ const swaggerDocument = {
           email: {
             type: "string",
             format: "email",
-            example: "john@example.com"
+            example: "abhay@example.com"
           },
           password: {
             type: "string",
