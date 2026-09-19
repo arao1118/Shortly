@@ -2,7 +2,7 @@ import userModel from "../models/userModel.js";
 import urlModel from "../models/urlModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import transporter from "../configs/nodemailer.js";
+import sendEmail from "../services/emailService.js"
 
 const register = async (req, res) => {
   try {
@@ -165,15 +165,13 @@ const generateOTP = async (req, res) => {
     await userExist.save();
 
     if (context === "RESET") {
-      await transporter.sendMail({
-        from: process.env.EMAIL_FROM,
+      await sendEmail({
         to: email,
-        subject: "Password Reset OTP",
+        subject: "Email Verification OTP",
         text: `The OTP to reset your password is ${OTP}. It expires in 5 minutes.`
       });
     } else {
-      await transporter.sendMail({
-        from: process.env.EMAIL_FROM,
+      await sendEmail({
         to: email,
         subject: "Email Verification OTP",
         text: `The OTP to verify your account is ${OTP}. It expires in 5 minutes.`
@@ -267,10 +265,9 @@ const verifyEmail = async (req, res) => {
 
     await userExist.save();
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: userExist.email,
-      subject: "Account Verified Successfully",
+    await sendEmail({
+      to: email,
+      subject: "Account Verification message.",
       text: "Congratulations! Your account has now been verified. You can continue using our service."
     });
 
@@ -494,9 +491,8 @@ const resetPassword = async (req, res) => {
 
     await userExist.save();
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_FROM,
-      to: userExist.email,
+    await sendEmail({
+      to: email,
       subject: "Security Notification: Password Changed",
       text: "Your account password was successfully changed. If you did not make this change, please contact support immediately."
     });
