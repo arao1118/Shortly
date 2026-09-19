@@ -42,6 +42,7 @@ src/
 ├── models/
 ├── routes/
 ├── server/
+├── services/
 |── swagger.js
 ```
 
@@ -83,7 +84,7 @@ http://localhost:4000
 ## Main API Routes
 
 | Method | Route | Description |
-|---|---|---|
+| --- | --- | --- |
 | POST | `/api/auth/register` | Register user |
 | POST | `/api/auth/login` | Login |
 | POST | `/api/auth/logout` | Logout |
