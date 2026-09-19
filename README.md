@@ -37,10 +37,12 @@ The project provides user authentication, URL management, expiration, email veri
 src/
 ├── configs/
 ├── controllers/
+├── docs/
 ├── middlewares/
 ├── models/
 ├── routes/
-└── server/
+├── server/
+|── swagger.js
 ```
 
 ## Setup
