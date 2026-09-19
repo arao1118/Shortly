@@ -10,7 +10,7 @@ export const publicLimiter = async (req, res, next) => {
   const key = `publicRate_limit:user:${ip}`;
 
   const MAX_REQUEST = 10;
-  const REFILL_RATE_PER_MS = 0.005;
+  const REFILL_RATE_PER_MS = 0.001;
 
   try {
 
@@ -23,7 +23,6 @@ export const publicLimiter = async (req, res, next) => {
         token_size: (MAX_REQUEST - 1).toString(),
         last_updated: currentTimeStamp.toString()
       });
-
       return next();
     }
 

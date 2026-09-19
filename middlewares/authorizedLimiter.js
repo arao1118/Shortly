@@ -7,7 +7,7 @@ export const publicLimiter = async (req, res, next) => {
   const key = `authRate_limit:user:${userId}`;
 
   const MAX_REQUEST = 10;
-  const REFILL_RATE_PER_MS = 0.005;
+  const REFILL_RATE_PER_MS = 0.001;
 
   try {
 
