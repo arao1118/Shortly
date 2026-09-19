@@ -166,7 +166,7 @@ const generateOTP = async (req, res) => {
 
     if (context === "RESET") {
       await transporter.sendMail({
-        from: process.env.EMAIL_USER,
+        from: process.env.EMAIL_FROM,
         to: email,
         subject: "Password Reset OTP",
         text: `The OTP to reset your password is ${OTP}. It expires in 5 minutes.`
@@ -495,7 +495,7 @@ const resetPassword = async (req, res) => {
     await userExist.save();
 
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: process.env.EMAIL_FROM,
       to: userExist.email,
       subject: "Security Notification: Password Changed",
       text: "Your account password was successfully changed. If you did not make this change, please contact support immediately."
