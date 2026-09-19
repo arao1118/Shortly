@@ -10,12 +10,12 @@ const swaggerDocument = {
 
   servers: [
     {
-      url: "http://localhost:4000",
-      description: "Local development server"
-    },
-    {
       url: "https://shortly-api-l2yj.onrender.com",
       description: "Production server"
+    },
+    {
+      url: "http://localhost:4000",
+      description: "Local development server"
     }
   ],
 
